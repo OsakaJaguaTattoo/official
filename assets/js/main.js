@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const revealItems = document.querySelectorAll(".reveal-target");
+
   if ("IntersectionObserver" in window && revealItems.length > 0) {
     revealItems.forEach((item) => item.classList.add("reveal-prepared"));
 
@@ -56,18 +57,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let autoSpeed = 0.45;
     let currentSpeed = autoSpeed;
     let isDragging = false;
-    let startX = 0;
-    let lastX = 0;
+    let isTouchDragging = false;
     let dragMoved = false;
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
     let velocity = 0;
     let momentum = 0;
     let animationId = null;
+    let touchMode = null;
 
-    const updateGallery = () => {
-      const halfWidth = galleryTrack.scrollWidth / 2;
+    const getHalfWidth = () => galleryTrack.scrollWidth / 2;
 
-      position -= currentSpeed;
-      position -= momentum;
+    const normalizePosition = () => {
+      const halfWidth = getHalfWidth();
 
       if (position <= -halfWidth) {
         position += halfWidth;
@@ -76,20 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (position > 0) {
         position -= halfWidth;
       }
+    };
+
+    const render = () => {
+      galleryTrack.style.transform = `translate3d(${position}px, 0, 0)`;
+    };
+
+    const updateGallery = () => {
+      position -= currentSpeed;
+      position -= momentum;
+
+      normalizePosition();
 
       momentum *= 0.95;
       if (Math.abs(momentum) < 0.02) {
         momentum = 0;
       }
 
-      galleryTrack.style.transform = `translate3d(${position}px, 0, 0)`;
+      render();
       animationId = requestAnimationFrame(updateGallery);
     };
 
     const stopAnimation = () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
+      if (animationId) cancelAnimationFrame(animationId);
     };
 
     const startAnimation = () => {
@@ -97,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       animationId = requestAnimationFrame(updateGallery);
     };
 
-    const pointerDown = (clientX) => {
+    const beginDrag = (clientX) => {
       isDragging = true;
       dragMoved = false;
       startX = clientX;
@@ -108,11 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
       galleryMarquee.classList.add("is-dragging");
     };
 
-    const pointerMove = (clientX) => {
+    const moveDrag = (clientX) => {
       if (!isDragging) return;
 
       const delta = clientX - lastX;
-      if (Math.abs(clientX - startX) > 3) {
+
+      if (Math.abs(clientX - startX) > 4) {
         dragMoved = true;
       }
 
@@ -120,20 +133,11 @@ document.addEventListener("DOMContentLoaded", () => {
       velocity = delta;
       lastX = clientX;
 
-      const halfWidth = galleryTrack.scrollWidth / 2;
-
-      if (position <= -halfWidth) {
-        position += halfWidth;
-      }
-
-      if (position > 0) {
-        position -= halfWidth;
-      }
-
-      galleryTrack.style.transform = `translate3d(${position}px, 0, 0)`;
+      normalizePosition();
+      render();
     };
 
-    const pointerUp = () => {
+    const endDrag = () => {
       if (!isDragging) return;
 
       isDragging = false;
@@ -143,21 +147,29 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     galleryMarquee.addEventListener("mousedown", (e) => {
-      pointerDown(e.clientX);
+      beginDrag(e.clientX);
     });
 
     window.addEventListener("mousemove", (e) => {
-      pointerMove(e.clientX);
+      moveDrag(e.clientX);
     });
 
     window.addEventListener("mouseup", () => {
-      pointerUp();
+      endDrag();
     });
 
     galleryMarquee.addEventListener(
       "touchstart",
       (e) => {
-        pointerDown(e.touches[0].clientX);
+        const touch = e.touches[0];
+        isTouchDragging = true;
+        touchMode = null;
+        dragMoved = false;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        lastX = touch.clientX;
+        velocity = 0;
+        momentum = 0;
       },
       { passive: true }
     );
@@ -165,14 +177,55 @@ document.addEventListener("DOMContentLoaded", () => {
     galleryMarquee.addEventListener(
       "touchmove",
       (e) => {
-        pointerMove(e.touches[0].clientX);
+        if (!isTouchDragging) return;
+
+        const touch = e.touches[0];
+        const diffX = touch.clientX - startX;
+        const diffY = touch.clientY - startY;
+
+        if (touchMode === null) {
+          if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
+            touchMode = Math.abs(diffX) > Math.abs(diffY) ? "horizontal" : "vertical";
+
+            if (touchMode === "horizontal") {
+              beginDrag(touch.clientX);
+            }
+          }
+        }
+
+        if (touchMode === "horizontal") {
+          e.preventDefault();
+          moveDrag(touch.clientX);
+        }
+      },
+      { passive: false }
+    );
+
+    galleryMarquee.addEventListener(
+      "touchend",
+      () => {
+        if (touchMode === "horizontal") {
+          endDrag();
+        }
+
+        isTouchDragging = false;
+        touchMode = null;
       },
       { passive: true }
     );
 
-    galleryMarquee.addEventListener("touchend", () => {
-      pointerUp();
-    });
+    galleryMarquee.addEventListener(
+      "touchcancel",
+      () => {
+        if (touchMode === "horizontal") {
+          endDrag();
+        }
+
+        isTouchDragging = false;
+        touchMode = null;
+      },
+      { passive: true }
+    );
 
     galleryCards.forEach((card) => {
       card.addEventListener("click", (e) => {
@@ -194,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    render();
     startAnimation();
   }
 });
