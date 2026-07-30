@@ -45,4 +45,229 @@
 
     <nav class="site-menu" id="siteMenu" aria-label="ページ内メニュー">
       <ul>
-        <li><a hre
+        <li><a href="#about">About</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#access">Access</a></li>
+        <li><a href="#service">Service・料金</a></li>
+        <li><a href="#reserve">予約方法</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero section reveal-target">
+      <div class="container hero-layout">
+        <p class="hero-label">Official Jagua Tattoo Studio</p>
+        <h2 class="hero-title">
+          肌に寄り添う、<br />
+          洗練されたアートを。
+        </h2>
+        <p class="hero-text">
+          ナチュラルな発色と上品なデザインで、
+          日常にもイベントにも映えるジャグアタトゥーを提案します。
+          初めての方でも相談しやすい、シンプルで落ち着いたスタジオです。
+        </p>
+        <a href="#reserve" class="button-primary">予約方法を見る</a>
+      </div>
+    </section>
+
+    <section id="about" class="section section-lined reveal-target">
+      <div class="container narrow">
+        <div class="section-head">
+          <p class="section-label">About</p>
+          <h2>お店について</h2>
+        </div>
+
+        <div class="text-stack">
+          <p>
+            当店では、一時的に楽しめるボディアートとして人気のジャグアタトゥーを提供しています。
+            黒を基調とした自然な色味で、ファッションの一部としても取り入れやすいのが特徴です。
+          </p>
+          <p>
+            シンプルなワンポイントから繊細なアートデザインまで、
+            お客様の雰囲気やご希望に合わせて丁寧にご提案します。
+            清潔感のある空間で、安心して施術を受けていただけます。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section section-lined gallery-section reveal-target">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Gallery</p>
+          <h2>デザイン例</h2>
+        </div>
+
+        <p class="section-intro">
+          写真は自動で横に流れます。気になる写真をタップまたはクリックすると一時停止し、下に説明が表示されます。
+        </p>
+
+        <div class="gallery-marquee" id="galleryMarquee">
+          <div class="gallery-track">
+            <button class="gallery-card is-active" type="button" data-title="Botanical Line" data-desc="植物をモチーフにした、やわらかく上品な人気デザインです。">
+              <img src="https://picsum.photos/seed/jagua01/640/760" alt="植物モチーフのジャグアタトゥーデザイン" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Minimal Symbol" data-desc="小さめで取り入れやすい、ミニマルなシンボルデザインです。">
+              <img src="https://picsum.photos/seed/jagua02/640/760" alt="ミニマルなシンボルのジャグアタトゥーデザイン" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Flower Accent" data-desc="花を主役にした華やかなデザインで、やさしい印象に仕上がります。">
+              <img src="https://picsum.photos/seed/jagua03/640/760" alt="花をモチーフにしたジャグアタトゥーデザイン" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Script Art" data-desc="文字や言葉を活かした、記念日にも人気のスタイルです。">
+              <img src="https://picsum.photos/seed/jagua04/640/760" alt="文字を使ったジャグアタトゥーデザイン" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Modern Pattern" data-desc="直線と曲線を組み合わせた、個性のあるモダンなアートです。">
+              <img src="https://picsum.photos/seed/jagua05/640/760" alt="モダンパターンのジャグアタトゥーデザイン" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Botanical Line" data-desc="植物をモチーフにした、やわらかく上品な人気デザインです。">
+              <img src="https://picsum.photos/seed/jagua01/640/760" alt="" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Minimal Symbol" data-desc="小さめで取り入れやすい、ミニマルなシンボルデザインです。">
+              <img src="https://picsum.photos/seed/jagua02/640/760" alt="" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Flower Accent" data-desc="花を主役にした華やかなデザインで、やさしい印象に仕上がります。">
+              <img src="https://picsum.photos/seed/jagua03/640/760" alt="" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Script Art" data-desc="文字や言葉を活かした、記念日にも人気のスタイルです。">
+              <img src="https://picsum.photos/seed/jagua04/640/760" alt="" loading="lazy" width="640" height="760" />
+            </button>
+
+            <button class="gallery-card" type="button" data-title="Modern Pattern" data-desc="直線と曲線を組み合わせた、個性のあるモダンなアートです。">
+              <img src="https://picsum.photos/seed/jagua05/640/760" alt="" loading="lazy" width="640" height="760" />
+            </button>
+          </div>
+        </div>
+
+        <div class="gallery-info" id="galleryInfo" aria-live="polite">
+          <h3>Botanical Line</h3>
+          <p>植物をモチーフにした、やわらかく上品な人気デザインです。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="access" class="section section-lined reveal-target">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Access</p>
+          <h2>アクセス</h2>
+        </div>
+
+        <div class="access-grid">
+          <div class="text-stack">
+            <p>
+              店舗住所や最寄り駅、駐車場情報などをここに記載してください。
+              予約制サロンの場合は、予約確定後に詳細案内を送る形でも大丈夫です。
+            </p>
+            <p>
+              <strong>住所例：</strong><br />
+              大阪府○○市○○町 1-2-3
+            </p>
+            <p>
+              <strong>アクセス例：</strong><br />
+              ○○駅から徒歩5分 / 近隣コインパーキングあり
+            </p>
+          </div>
+
+          <div class="map-box">
+            <iframe
+              title="Google Map"
+              src="https://www.google.com/maps?q=Osaka%20Japan&z=13&output=embed"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="service" class="section section-lined reveal-target">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Service / Price</p>
+          <h2>サービス・料金表</h2>
+        </div>
+
+        <div class="price-box">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th>メニュー</th>
+                <th>内容</th>
+                <th>料金</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ワンポイント</td>
+                <td>小さめのシンプルデザイン</td>
+                <td>¥2,000〜</td>
+              </tr>
+              <tr>
+                <td>ミディアム</td>
+                <td>手のひらサイズ前後</td>
+                <td>¥4,000〜</td>
+              </tr>
+              <tr>
+                <td>ラージ</td>
+                <td>広範囲アートデザイン</td>
+                <td>¥7,000〜</td>
+              </tr>
+              <tr>
+                <td>オーダーデザイン</td>
+                <td>相談しながら制作</td>
+                <td>要相談</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="table-note">
+          ※サイズ、部位、デザインの細かさによって料金は変動します。事前相談がおすすめです。
+        </p>
+      </div>
+    </section>
+
+    <section id="reserve" class="section section-lined reserve-section reveal-target">
+      <div class="container narrow">
+        <div class="section-head">
+          <p class="section-label">Reservation</p>
+          <h2>予約方法</h2>
+        </div>
+
+        <div class="text-stack">
+          <p>
+            ご予約・ご相談はInstagramのDMから受け付けています。
+            希望日時、希望デザイン、サイズ感、施術部位などを送っていただくとご案内がスムーズです。
+          </p>
+        </div>
+
+        <a
+          href="https://www.instagram.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button-primary"
+        >
+          Instagramで予約する
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© Osaka Jagua Tattoo</p>
+      <p>Temporary Tattoo / Art / Design</p>
+    </div>
+  </footer>
+</body>
+</html>
