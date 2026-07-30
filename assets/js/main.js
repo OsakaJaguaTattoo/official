@@ -1,5 +1,3 @@
-document.documentElement.classList.add("is-ready");
-
 document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menuToggle");
   const siteMenu = document.getElementById("siteMenu");
@@ -26,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const revealItems = document.querySelectorAll(".js-reveal");
+  const revealItems = document.querySelectorAll(".reveal-target");
 
   if ("IntersectionObserver" in window && revealItems.length > 0) {
     const observer = new IntersectionObserver(
@@ -39,14 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
       }
     );
 
-    revealItems.forEach((item) => observer.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
+    revealItems.forEach((item) => {
+      item.classList.add("reveal-prepared");
+      observer.observe(item);
+    });
   }
 
   const galleryMarquee = document.getElementById("galleryMarquee");
@@ -74,4 +73,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
