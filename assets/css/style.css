@@ -180,6 +180,7 @@ p {
   letter-spacing: 0.03em;
 }
 
+/* 3 本線ボタン（PC では非表示） */
 .menu-toggle {
   width: 52px;
   height: 52px;
@@ -192,6 +193,7 @@ p {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+  display: none; /* PC: 非表示 */
 }
 
 .menu-toggle span {
@@ -214,31 +216,70 @@ p {
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
+/* PC: メニューは常に表示 */
 .site-menu {
-  width: min(var(--container), calc(100% - 32px));
-  margin: 0 auto;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.site-menu.is-open {
-  max-height: 320px;
+  width: auto;
+  margin: 0;
+  max-height: none;
+  overflow: visible;
 }
 
 .site-menu ul {
   list-style: none;
   margin: 0;
-  padding: 0 0 16px;
-  display: grid;
-  gap: 8px;
+  padding: 0;
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
 }
 
 .site-menu a {
   display: block;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+  border: none;
   font-size: var(--text-sm);
+}
+
+/* スマホ・タブレット（横幅 900px 以下） */
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: inline-flex; /* スマホのみ 3 本線を表示 */
+  }
+
+  .site-menu {
+    width: min(var(--container), calc(100% - 32px));
+    margin: 0 auto;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .site-menu.is-open {
+    max-height: 320px;
+  }
+
+  .site-menu ul {
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 0 16px;
+    align-items: stretch;
+  }
+
+  .site-menu a {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .access-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-box iframe {
+    height: 360px;
+  }
+
+  .gallery-card {
+    width: clamp(150px, 28vw, 200px);
+  }
 }
 
 .hero-layout {
@@ -418,7 +459,7 @@ p {
   transform: none;
 }
 
-/* JSが有効なときだけアニメーション対象にする */
+/* JS が有効なときだけアニメーション対象にする */
 .reveal-target.reveal-prepared {
   opacity: 0;
   transform: translateY(28px);
@@ -436,20 +477,6 @@ p {
   }
   100% {
     transform: translateX(calc(-50% - 8px));
-  }
-}
-
-@media (max-width: 900px) {
-  .access-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .map-box iframe {
-    height: 360px;
-  }
-
-  .gallery-card {
-    width: clamp(150px, 28vw, 200px);
   }
 }
 
