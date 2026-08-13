@@ -49,12 +49,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const galleryMarquee = document.getElementById("galleryMarquee");
   const galleryTrack = document.getElementById("galleryTrack");
-  const galleryCards = document.querySelectorAll(".gallery-card");
   const galleryInfo = document.getElementById("galleryInfo");
 
-  if (galleryMarquee && galleryTrack && galleryCards.length > 0 && galleryInfo) {
+  if (galleryMarquee && galleryTrack && galleryInfo) {
+    const originalCards = Array.from(
+      galleryTrack.querySelectorAll(".gallery-card")
+    );
+
+    if (originalCards.length > 0) {
+      originalCards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.classList.remove("is-active");
+        galleryTrack.appendChild(clone);
+      });
+    }
+
+    const galleryCards = Array.from(
+      galleryTrack.querySelectorAll(".gallery-card")
+    );
+
     let position = 0;
-    let autoSpeed = 0.45;
+    const autoSpeed = 0.45;
     let currentSpeed = autoSpeed;
     let isDragging = false;
     let isTouchDragging = false;
@@ -67,17 +82,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let animationId = null;
     let touchMode = null;
 
-    const getHalfWidth = () => galleryTrack.scrollWidth / 2;
+    const getLoopWidth = () => galleryTrack.scrollWidth / 2;
 
     const normalizePosition = () => {
-      const halfWidth = getHalfWidth();
+      const loopWidth = getLoopWidth();
 
-      if (position <= -halfWidth) {
-        position += halfWidth;
+      if (!loopWidth) return;
+
+      while (position <= -loopWidth) {
+        position += loopWidth;
       }
 
-      if (position > 0) {
-        position -= halfWidth;
+      while (position > 0) {
+        position -= loopWidth;
       }
     };
 
@@ -101,12 +118,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const stopAnimation = () => {
-      if (animationId) cancelAnimationFrame(animationId);
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
     };
 
     const startAnimation = () => {
       stopAnimation();
       animationId = requestAnimationFrame(updateGallery);
+    };
+
+    const setActiveCard = (card) => {
+      galleryCards.forEach((item) => item.classList.remove("is-active"));
+      card.classList.add("is-active");
+
+      const title = card.dataset.title || "";
+      const desc = card.dataset.desc || "";
+
+      galleryInfo.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+      `;
     };
 
     const beginDrag = (clientX) => {
@@ -159,6 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     galleryMarquee.addEventListener(
+      "mouseleave",
+      () => {
+        endDrag();
+      },
+      { passive: true }
+    );
+
+    galleryMarquee.addEventListener(
       "touchstart",
       (e) => {
         const touch = e.touches[0];
@@ -185,7 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (touchMode === null) {
           if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
-            touchMode = Math.abs(diffX) > Math.abs(diffY) ? "horizontal" : "vertical";
+            touchMode =
+              Math.abs(diffX) > Math.abs(diffY) ? "horizontal" : "vertical";
 
             if (touchMode === "horizontal") {
               beginDrag(touch.clientX);
@@ -234,18 +276,16 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        galleryCards.forEach((item) => item.classList.remove("is-active"));
-        card.classList.add("is-active");
-
-        const title = card.dataset.title || "";
-        const desc = card.dataset.desc || "";
-
-        galleryInfo.innerHTML = `
-          <h3>${title}</h3>
-          <p>${desc}</p>
-        `;
+        setActiveCard(card);
       });
     });
+
+    const initialCard =
+      galleryTrack.querySelector(".gallery-card.is-active") || galleryCards[0];
+
+    if (initialCard) {
+      setActiveCard(initialCard);
+    }
 
     render();
     startAnimation();
