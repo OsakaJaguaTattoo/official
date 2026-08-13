@@ -525,3 +525,90 @@ p {
     transition: none;
   }
 }
+
+.site-title-accent {
+  display: inline-block;
+  margin-left: 0.18em;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: #6f6257;
+  position: relative;
+}
+
+.site-title-accent::after {
+  content: "";
+  position: absolute;
+  left: 0.08em;
+  right: 0;
+  bottom: 0.08em;
+  height: 0.32em;
+  background: rgba(111, 98, 87, 0.12);
+  z-index: -1;
+  border-radius: 999px;
+}
+
+.service-price-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 12px;
+}
+
+.price-panel {
+  padding: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 20px;
+}
+
+.price-panel-head {
+  margin-bottom: 16px;
+}
+
+.price-panel-label {
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8c8177;
+}
+
+.price-panel h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 600;
+  color: #2f2925;
+}
+
+.reserve-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(47, 41, 37, 0.16);
+  color: #2f2925;
+  background: transparent;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.button-secondary:hover {
+  background: rgba(47, 41, 37, 0.06);
+  border-color: rgba(47, 41, 37, 0.28);
+}
+
+@media (min-width: 900px) {
+  .service-price-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
